@@ -41,7 +41,6 @@ pip-delete-this-directory.txt
 
 # Log files
 *.log
-*.csv
 *.dat
 *.out
 *.pid
