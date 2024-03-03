@@ -1,0 +1,105 @@
+# Operating system generated files
+.DS_Store
+Thumbs.db
+
+# IDE or text editor generated files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter Notebook checkpoints
+notebooks/.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Python virtual environments
+venv/
+.env/
+
+# Build output directories
+build/
+dist/
+out/
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Dependency management files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Environment-specific files
+.env
+.env.local
+.env.*.local
+
+# Log files
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.seed
+
+# SQLite database files
+*.sqlite
+*.sqlite3
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Compiled Java classes
+*.class
+
+# # Data files
+# *.hdf5
+# *.pkl
+# *.csv
+# *.xls
+# *.xlsx
+# *.json
+# *.xml
+# data/
+# !data/.gitkeep
+
+# Model files
+models/
+!models/.gitkeep
+
+# Temporary files or directories
+tmp/
+temp/
+.cache/
+
+# Scientific and numerical tools
+*.mat
+*.mex*
+*.mexa64
+*.mexmaci64
+*.mexw64
+*.mexw32
+
+# Machine learning, data analysis output files
+*.tensor
+*.ckpt
+checkpoint/
+
+# Kaggle dataset directories
+.kaggle/
+
+# DVC files
+.dvc/
+.dvcignore
+
+# MLflow experiment tracking
+mlruns/
+
+# Streamlit apps
+.streamlit/
