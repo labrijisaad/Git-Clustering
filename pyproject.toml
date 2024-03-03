@@ -1,0 +1,41 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "git_clustering"
+version = "0.1.0"
+description = "An enhanced version of the GIT (Graph Intensity Topology) clustering algorithm, repackaged for ease of use."
+authors = ["LABRIJI Saad <labrijisaad@gmail.com>"]
+readme = "README.md"
+license = "MIT"
+homepage = "https://github.com/labrijisaad/Git-Clustering"
+repository = "https://github.com/labrijisaad/Git-Clustering"
+documentation = "https://github.com/gaozhangyang/GIT#readme"
+packages = [
+    { include = "git_cluster", from = "src" },
+    { include = "dataloaders", from = "src" },
+    { include = "utils", from = "src" }
+]
+
+include = ["src/datasets/*.csv"]
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.11.5"
+numpy = "1.26.4"
+scipy = "1.12.0"
+
+[tool.poetry.urls]
+"Homepage" = "https://github.com/labrijisaad/Git-Clustering"
+"Repository" = "https://github.com/labrijisaad/Git-Clustering"
+"Documentation" = "https://github.com/gaozhangyang/GIT#readme"

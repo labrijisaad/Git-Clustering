@@ -6,7 +6,7 @@ toy_datasets = ['circles', 'impossible', 'moons', 's-set', \
                 'smile', 'complex8', 'complex9', 'chainlink']
 
 class Toy_DataLoader:
-    def __init__(self, name, path='./datasets/toy_datasets'):
+    def __init__(self, name, path='../src/datasets/toy_datasets'):
         self.name = name
         self.path = path
         assert name in toy_datasets
