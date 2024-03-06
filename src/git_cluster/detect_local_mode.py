@@ -3,11 +3,7 @@ from .kde import KDE_DIS
 
 
 class LCluster:
-    def __init__(
-        self,
-        k,
-        n_jobs=100
-    ):
+    def __init__(self, k, n_jobs=100):
         self.k = k
         self.n_jobs = n_jobs
 
@@ -33,13 +29,13 @@ class LCluster:
             index += 1
             Back_mask[i] = 0
 
-            idx_iN = I[i, 1:self.k+1]  # the index value nearest k neighbors
+            idx_iN = I[i, 1 : self.k + 1]  # the index value nearest k neighbors
             mask = P[idx_iN] > P[i]
             # the density of the selected neighboring points is greater than the current point
             J = idx_iN[mask]
 
             if J.shape[0] > 0:
-                grad = (P[J]-P[i])/(D[i, 1:self.k+1][mask])
+                grad = (P[J] - P[i]) / (D[i, 1 : self.k + 1][mask])
                 j = J[np.argmax(grad)]
             else:
                 j = None  # The father node was not found
@@ -49,7 +45,8 @@ class LCluster:
                 for s in J[1:]:
                     if X_extend[s, -2] != X_extend[i, -2]:
                         Boundary.append(
-                            (i, s, int(X_extend[i, -2]), int(X_extend[s, -2])))
+                            (i, s, int(X_extend[i, -2]), int(X_extend[s, -2]))
+                        )
 
             idx.remove(i)  # delete point i
 

@@ -4,12 +4,7 @@ from .topo_graph import TopoGraph
 
 
 class GIT:
-    def __init__(
-        self, 
-        k=8, 
-        target_ratio=[1., 1.],
-        n_jobs=100
-    ):
+    def __init__(self, k=8, target_ratio=[1.0, 1.0], n_jobs=100):
         """
         Graph Intensity Topologg (GIT) clustering.
         Parameters
@@ -27,21 +22,20 @@ class GIT:
 
     def fit_predict(self, X):
         """Compute GIT clustering.
-        
+
         Parameters
         ----------
         X: array-like of shape (n_samples, n_features)
         """
         LC = LCluster(k=self.k, n_jobs=self.n_jobs)
         V, Boundary, X_extend, Dis = LC.detect_descending_manifolds(X)
-    
+
         TG = TopoGraph(target_ratio=self.target_ratio)
-        _, _, clusters = TG.topograph_construction_pruning(
-            V, X_extend, Boundary, Dis)
-    
+        _, _, clusters = TG.topograph_construction_pruning(V, X_extend, Boundary, Dis)
+
         for c, cluster_index in clusters.items():
             for cluster in cluster_index:
                 X_extend[V[cluster], -1] = c
-    
+
         Y = X_extend[:, -1].astype(int)  # Changed from np.int to int
         return Y

@@ -1,3 +1,3 @@
 from .git import GIT
 
-__all__ = ('GIT')
+__all__ = "GIT"
