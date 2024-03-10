@@ -34,3 +34,6 @@ __pycache__/
 
 # Machine learning, data analysis output files
 checkpoint/
+
+# packaging
+poetry.lock
