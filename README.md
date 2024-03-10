@@ -17,14 +17,14 @@ To get started, explore the [notebooks/Quick_Start_with_GIT.ipynb](https://githu
 ## Testing in Google Colab 🧪
 To validate the installation and functionality of the GIT Clustering package, follow these steps:
 
-1. Install the package from TestPyPI:
+1. Install the GIT Clustering package from TestPyPI and upgrade gdown for dataset downloading:
     ```bash
-    !pip install -i https://test.pypi.org/simple/ git_cluster
+    !pip install -i https://test.pypi.org/simple/git_cluster
+    !pip install -U gdown
     ```
-2. Download and prepare your dataset:
+2. Download the dataset and prepare it for use:
     ```bash
-    !gdown --id 1yNwCStP3Sdf2lfvNe9h0WIZw2OQ3O2UP
-    !unzip datasets.zip
+    !gdown 1yNwCStP3Sdf2lfvNe9h0WIZw2OQ3O2UP && unzip datasets.zip
     ```
 3. Execute a sample clustering process:
     ```python
@@ -36,7 +36,7 @@ To validate the installation and functionality of the GIT Clustering package, fo
     Y_pred = GIT(k=12).fit_predict(X)
     autoPlot(X, Y_pred)
     ```
-
+    
 ## Acknowledgments 🎉
 - Original GIT Algorithm Authors
 
