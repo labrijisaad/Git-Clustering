@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "git_cluster"
-version = "0.2.3"
+version = "0.2.4"
 description = "An enhanced version of the GIT (Graph Intensity Topology) 🌐 clustering algorithm, repackaged 📦 for optimal ease of use 🛠️."
 authors = ["LABRIJI Saad <labrijisaad@gmail.com>"]
 readme = "README.md"
