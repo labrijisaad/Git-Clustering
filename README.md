@@ -5,10 +5,10 @@
 🔍 **Dive Deeper in Our GitHub Repository**: [Git-Clustering GitHub Repo](https://github.com/labrijisaad/Git-Clustering)
 
 ## About 📖
-This repository presents an enhanced version of the GIT (Graph of Intensity Topology) clustering algorithm, improved and repackaged for an ease of use. 🚀
+This repository introduces an enhanced version of the GIT (Graph of Intensity Topology) clustering algorithm. It's been **augmented with additional methods**, **repackaged** for ease of use, and includes **comprehensive benchmarks** to demonstrate its performance. 🚀
 
 ## Features ✨
-- **Broad Applicability:** Tested across a variety of datasets. 🌍
+- **Broad Applicability:** Tested across a variety of datasets. 🌍 (See the benchmarks in the [notebooks/Quick_Start_with_GIT.ipynb](https://github.com/labrijisaad/Git-Clustering/blob/main/notebooks/Quick_Start_with_GIT.ipynb)).
 - **User-friendly Packaging:** Simplified integration into your projects. 📦
 
 ## Usage 🛠️
@@ -29,7 +29,7 @@ Follow these steps to manually install the GIT Clustering package and test its f
     !pip install -U gdown
     ```
 
-2. **Download the dataset and prepare it for use:**
+2. **Download the datasets and prepare it for use:**
     ```bash
     !gdown 1yNwCStP3Sdf2lfvNe9h0WIZw2OQ3O2UP && unzip datasets.zip
     ```
@@ -45,11 +45,23 @@ Follow these steps to manually install the GIT Clustering package and test its f
     autoPlot(X, Y_pred)
     ```
 
-    
 ## Acknowledgments 🎉
-- Original GIT Algorithm Authors
+- We extend our thanks to the original authors of the GIT algorithm for their foundational work in `Clustering Based on Graph of Intensity Topology`:
+  - Gao, Zhangyang and Lin, Haitao and Tan, Cheng and Wu, Lirong and Li, Stan and others.
 
-## Connect 🌐
+## Citing This Work 📝
+If you use the enhanced GIT Clustering algorithm in your research or project, please consider citing the original work:
+
+```bibtex
+@article{gao2021git,
+  title={Git: Clustering Based on Graph of Intensity Topology},
+  author={Gao, Zhangyang and Lin, Haitao and Tan, Cheng and Wu, Lirong and Li, Stan and others},
+  journal={arXiv preprint arXiv:2110.01274},
+  year={2021}
+}
+```
+
+## Connect with me 🌐
 <div align="center">
   <a href="https://www.linkedin.com/in/labrijisaad/">
     <img src="https://img.shields.io/badge/LinkedIn-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" style="margin-bottom: 5px;"/>
