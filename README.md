@@ -50,7 +50,7 @@ Follow these steps to manually install the GIT Clustering package and test its f
   - Gao, Zhangyang and Lin, Haitao and Tan, Cheng and Wu, Lirong and Li, Stan and others.
 
 ## Citing This Work 📝
-If you use the enhanced GIT Clustering algorithm in your research or project, please consider citing the original work:
+If you use the GIT Clustering algorithm in your research or project, please consider citing the original work:
 
 ```bibtex
 @article{gao2021git,
