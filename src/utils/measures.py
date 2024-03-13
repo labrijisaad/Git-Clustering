@@ -46,7 +46,26 @@ def match(current, true_set, noise_set):
     return idx
 
 
-def matchY(Y_pred, Y_true):
+def alignPredictedWithTrueLabels(Y_pred, Y_true):
+    """
+    Aligns predicted labels with true labels to accurately evaluate clustering performance.
+
+    This function adjusts the predicted labels to best match the true labels, facilitating
+    a meaningful comparison between them. It handles noise in both predicted and true labels,
+    ensuring that outliers do not distort the evaluation. The function specifically:
+    - Filters 'noise' from true labels, if present.
+    - Identifies and isolates noise within predicted labels.
+    - Remaps predicted labels to match with true labels as closely as possible.
+    - Reassigns the noise label to originally identified noisy predictions.
+
+    Parameters:
+    - Y_pred: array-like, Predicted labels as output by a clustering algorithm.
+    - Y_true: array-like, True labels for the data points.
+
+    Returns:
+    - Y_pred: array-like, Predicted labels aligned with the true labels.
+    - Y_true: array-like, True labels filtered and adjusted for direct comparison with Y_pred.
+    """
     if type(Y_true[0]) == str:
         select_mask = Y_true != "noise"
         Y_true = Y_true[select_mask]
