@@ -1,4 +1,4 @@
-from .measures import matchY, measures_calculator
+from .measures import alignPredictedWithTrueLabels, measures_calculator
 from .plot_tools import autoPlot
 
-__all__ = ("matchY", "measures_calculator", "autoPlot")
+__all__ = ("alignPredictedWithTrueLabels", "measures_calculator", "autoPlot")

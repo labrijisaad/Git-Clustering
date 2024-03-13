@@ -4,6 +4,7 @@ from sklearn.metrics import (
     adjusted_rand_score,
     accuracy_score,
     normalized_mutual_info_score,
+    silhouette_score
 )
 import pandas as pd
 import sys
@@ -108,28 +109,51 @@ def alignPredictedWithTrueLabels(Y_pred, Y_true):
     return Y_pred, Y_true
 
 
-def measures_calculator(Y_true, Y_pred):
+def measures_calculator(X, Y_true, Y_pred):
     """
-    to calculation the measures for method evaluation;
-    if multiclass is Ture, it will automatically find the best permutation of class label of Y_pred according to f1 score.
+    Calculates various clustering evaluation metrics based on true labels, predicted labels,
+    and the original data points.
+    
+    Parameters:
+    - X: array-like of shape (n_samples, n_features), Original data points used for clustering.
+    - Y_true: array-like of shape (n_samples,), True labels for each sample.
+    - Y_pred: array-like of shape (n_samples,), Predicted cluster labels for each sample.
+    
+    Returns:
+    - DataFrame containing clustering metrics: F1 Score, Adjusted Rand Index (ARI),
+      Accuracy (ACC), Normalized Mutual Information (NMI), Silhouette Score,
+      coverage rate, and number of classes.
     """
-    N_cls = len(set(Y_pred))
-    if -1 in Y_pred:
-        N_cls -= 1
-    Y_pred, Y_true = matchY(Y_pred, Y_true)
-    cover_rate = cover_calculator(Y_pred)
-    Y_true = Y_true[Y_pred != -1]
-    Y_pred = Y_pred[Y_pred != -1]
-    df_mesures = pd.DataFrame(
-        columns=["f1", "ARI", "ACC", "NMI", "cover_rate", "classes"]
-    )
-    # df_mesures = pd.DataFrame(columns=['f1', 'ARI', 'ACC', 'cover_rate'])
-
-    f1 = f1_score_calculator(Y_true, Y_pred)
-    ARI = ARI_calculator(Y_true, Y_pred)
-    ACC = ACC_calculator(Y_true, Y_pred)
-    NMI = normalized_mutual_info_score(Y_true, Y_pred)
-
-    df_mesures.loc[0] = [f1, ARI, ACC, NMI, cover_rate, N_cls]
-    # df_mesures.loc[0] = [f1, ARI, ACC, cover_rate]
-    return df_mesures
+    # Exclude noise points from evaluation
+    is_not_noise = Y_pred != -1
+    X_filtered = X[is_not_noise]
+    Y_pred_filtered = Y_pred[is_not_noise]
+    Y_true_filtered = Y_true[is_not_noise]
+    
+    # Calculate metrics
+    num_classes = len(set(Y_pred_filtered)) - (1 if -1 in Y_pred_filtered else 0)
+    coverage_rate = len(Y_pred_filtered) / len(Y_pred) if len(Y_pred) > 0 else 0
+    
+    f1 = f1_score(Y_true_filtered, Y_pred_filtered, average='weighted')
+    ari = adjusted_rand_score(Y_true_filtered, Y_pred_filtered)
+    acc = accuracy_score(Y_true_filtered, Y_pred_filtered)
+    nmi = normalized_mutual_info_score(Y_true_filtered, Y_pred_filtered)
+    
+    # Calculate additional metrics if the predicted labels form at least one cluster excluding noise
+    if num_classes > 0:
+        silhouette = silhouette_score(X_filtered, Y_pred_filtered) if num_classes > 1 else 0
+    else:
+        silhouette= 0
+    
+    # Create a DataFrame to store the metrics
+    metrics_df = pd.DataFrame({
+        "f1": [f1], 
+        "ARI": [ari], 
+        "ACC": [acc], 
+        "NMI": [nmi], 
+        "Silhouette": [silhouette],
+        "cover_rate": [coverage_rate], 
+        "classes": [num_classes]
+    })
+    
+    return metrics_df
