@@ -8,7 +8,7 @@
 This repository introduces an enhanced version of the GIT (Graph of Intensity Topology) clustering algorithm. It's been **augmented with additional methods**, **repackaged** for ease of use, and includes **comprehensive benchmarks** to demonstrate its performance. 🚀
 
 ## Features ✨
-- **Broad Applicability:** Tested across a variety of datasets. 🌍 (See the benchmarks in the [notebooks/Quick_Start_with_GIT.ipynb](https://github.com/labrijisaad/Git-Clustering/blob/main/notebooks/Quick_Start_with_GIT.ipynb)).
+- **Broad Applicability:** Tested across a variety of datasets. 🌍 (See the benchmarks in the [notebooks/](https://github.com/labrijisaad/Git-Clustering/tree/main/notebooks)).
 - **User-friendly Packaging:** Simplified integration into your projects. 📦
 
 ## Usage 🛠️
@@ -37,12 +37,21 @@ Follow these steps to manually install the GIT Clustering package and test its f
 3. **Execute a sample clustering process:**
     ```python
     from git_cluster import GIT
-    from utils import matchY, measures_calculator, autoPlot
-    from dataloaders import Toy_DataLoader as DataLoader
+    from utils import alignPredictedWithTrueLabels, autoPlot
+    from dataloaders import Toy_DataLoader as Toy_DataLoader
 
-    X, Y_true = DataLoader(name='circles', path="/content/datasets/toy_datasets").load()
-    Y_pred = GIT(k=12).fit_predict(X)
-    autoPlot(X, Y_pred)
+    # Load the Circles Dataset
+    X_circles, Y_circles_true = Toy_DataLoader(name='circles', 
+                                              path="/content/datasets/toy_datasets").load()
+
+    # Create an instance of the GIT clustering
+    git = GIT(k=12, target_ratio=[1, 1])
+
+    # Fit the GIT model to the dataset and predict cluster labels.
+    Y_circles_pred = git.fit_predict(X_circles)
+
+    # Plot the dataset and highlight the clusters with different colors.
+    autoPlot(X_circles, Y_circles_pred)
     ```
 
 ## Acknowledgments 🎉
