@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from .detect_local_mode import LCluster
 from .topo_graph import TopoGraph
 
+
 class GIT:
     def __init__(self, k=8, target_ratio=[1.0, 1.0], n_jobs=100):
         """
@@ -95,30 +96,35 @@ class GIT:
         ax = plt.subplot(111)
         for label, color in zip(unique_labels, colors):
             cluster_points = X[labels == label]
-            ax.scatter(cluster_points[:, 0], cluster_points[:, 1], s=10,
-                       color=color, label=f'Cluster {label}')
+            ax.scatter(
+                cluster_points[:, 0],
+                cluster_points[:, 1],
+                s=10,
+                color=color,
+                label=f"Cluster {label}",
+            )
 
-        plt.title('Cluster Plot')
+        plt.title("Cluster Plot")
         box = ax.get_position()
         ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+        ax.legend(loc="center left", bbox_to_anchor=(1, 0.5))
         plt.show()
 
         # Calculating statistics
         total_samples = len(labels)
-        stats = {'Cluster Label': [], 'Size': [], 'Percentage': []}
+        stats = {"Cluster Label": [], "Size": [], "Percentage": []}
 
         for label in unique_labels:
             cluster_data = X[labels == label]
             size = cluster_data.shape[0]
-            stats['Cluster Label'].append(label)
-            stats['Size'].append(size)
-            stats['Percentage'].append(round((size / total_samples) * 100, 2))
+            stats["Cluster Label"].append(label)
+            stats["Size"].append(size)
+            stats["Percentage"].append(round((size / total_samples) * 100, 2))
 
         # Creating the DataFrame from the dictionary
-        stats_df = pd.DataFrame.from_dict(stats).set_index('Cluster Label')
+        stats_df = pd.DataFrame.from_dict(stats).set_index("Cluster Label")
 
         # Ensure DataFrame is sorted by cluster labels
         stats_df = stats_df.loc[unique_labels]
 
-        return stats_df.sort_values(by=['Size'], ascending=False).T
+        return stats_df.sort_values(by=["Size"], ascending=False).T

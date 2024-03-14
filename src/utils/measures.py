@@ -1,10 +1,11 @@
 import numpy as np
+from collections import defaultdict
 from sklearn.metrics import (
     f1_score,
     adjusted_rand_score,
     accuracy_score,
     normalized_mutual_info_score,
-    silhouette_score
+    silhouette_score,
 )
 import pandas as pd
 import sys
@@ -113,12 +114,12 @@ def measures_calculator(X, Y_true, Y_pred):
     """
     Calculates various clustering evaluation metrics based on true labels, predicted labels,
     and the original data points.
-    
+
     Parameters:
     - X: array-like of shape (n_samples, n_features), Original data points used for clustering.
     - Y_true: array-like of shape (n_samples,), True labels for each sample.
     - Y_pred: array-like of shape (n_samples,), Predicted cluster labels for each sample.
-    
+
     Returns:
     - DataFrame containing clustering metrics: F1 Score, Adjusted Rand Index (ARI),
       Accuracy (ACC), Normalized Mutual Information (NMI), Silhouette Score,
@@ -129,31 +130,75 @@ def measures_calculator(X, Y_true, Y_pred):
     X_filtered = X[is_not_noise]
     Y_pred_filtered = Y_pred[is_not_noise]
     Y_true_filtered = Y_true[is_not_noise]
-    
+
     # Calculate metrics
     num_classes = len(set(Y_pred_filtered)) - (1 if -1 in Y_pred_filtered else 0)
     coverage_rate = len(Y_pred_filtered) / len(Y_pred) if len(Y_pred) > 0 else 0
-    
-    f1 = f1_score(Y_true_filtered, Y_pred_filtered, average='weighted')
+
+    f1 = f1_score(Y_true_filtered, Y_pred_filtered, average="weighted")
     ari = adjusted_rand_score(Y_true_filtered, Y_pred_filtered)
     acc = accuracy_score(Y_true_filtered, Y_pred_filtered)
     nmi = normalized_mutual_info_score(Y_true_filtered, Y_pred_filtered)
-    
+
     # Calculate additional metrics if the predicted labels form at least one cluster excluding noise
     if num_classes > 0:
-        silhouette = silhouette_score(X_filtered, Y_pred_filtered) if num_classes > 1 else 0
+        silhouette = (
+            silhouette_score(X_filtered, Y_pred_filtered) if num_classes > 1 else 0
+        )
     else:
-        silhouette= 0
-    
+        silhouette = 0
+
     # Create a DataFrame to store the metrics
-    metrics_df = pd.DataFrame({
-        "f1": [f1], 
-        "ARI": [ari], 
-        "ACC": [acc], 
-        "NMI": [nmi], 
-        "Silhouette": [silhouette],
-        "cover_rate": [coverage_rate], 
-        "classes": [num_classes]
-    })
-    
+    metrics_df = pd.DataFrame(
+        {
+            "f1": [f1],
+            "ARI": [ari],
+            "ACC": [acc],
+            "NMI": [nmi],
+            "Silhouette": [silhouette],
+            "cover_rate": [coverage_rate],
+            "classes": [num_classes],
+        }
+    )
+
     return metrics_df
+
+
+def get_balanced_subset(X, Y, subset_percentage):
+    """
+    Get a balanced subset of the data X and Y with a specified percentage.
+
+    Parameters:
+        X (numpy.ndarray): Input data.
+        Y (numpy.ndarray): Labels corresponding to X.
+        subset_percentage (float): Percentage of data to select.
+
+    Returns:
+        numpy.ndarray: Selected subset of X.
+        numpy.ndarray: Selected subset of Y.
+    """
+    num_clusters = len(np.unique(Y))
+    num_samples_per_cluster = int(len(X) * subset_percentage / num_clusters)
+
+    # Shuffle the data
+    shuffled_indices = np.random.permutation(len(X))
+    X_shuffled = X[shuffled_indices]
+    Y_shuffled = Y[shuffled_indices]
+
+    balanced_subset_X = []
+    balanced_subset_Y = []
+    samples_per_cluster = defaultdict(int)
+
+    for x, y in zip(X_shuffled, Y_shuffled):
+        if samples_per_cluster[y] < num_samples_per_cluster:
+            balanced_subset_X.append(x)
+            balanced_subset_Y.append(y)
+            samples_per_cluster[y] += 1
+
+        if all(
+            samples == num_samples_per_cluster
+            for samples in samples_per_cluster.values()
+        ):
+            break
+
+    return np.array(balanced_subset_X), np.array(balanced_subset_Y)
