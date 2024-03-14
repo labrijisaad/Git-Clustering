@@ -2,9 +2,10 @@ import numpy as np
 import pandas as pd
 import os.path as osp
 from sklearn.datasets import fetch_olivetti_faces
+from sklearn.preprocessing import LabelEncoder
 from torchvision import datasets
 
-small_scale_datasets = ["iris", "wine", "glass", "breast_cancer", "hepatitis"]
+small_scale_datasets = ["iris", "wine", "glass", "breast_cancer", "hepatitis", "fish"]
 large_scale_datasets = ["face", "mnist_784", "fmnist_784"]
 
 
@@ -54,4 +55,10 @@ class Real_DataLoader:
             N = fmnist.test_data.shape[0]
             X = fmnist.test_data.numpy().reshape(N, 784) / 255
             Y_true = fmnist.test_labels.numpy()
+        elif self.name == "fish":
+            label_encoder = LabelEncoder()
+            # The first column (at index 0) is the target that needs label encoding
+            Y_true = label_encoder.fit_transform(df.iloc[1:, 0].values)
+            # The rest of the columns (starting from index 1) are features
+            X = df.iloc[1:, 1:].values.astype(float)
         return X, Y_true
