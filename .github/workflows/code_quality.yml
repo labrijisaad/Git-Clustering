@@ -28,8 +28,6 @@ jobs:
       run: black .
     - name: Check Linting Errors with Ruff
       run: ruff check .
-    - name: Auto-fix Linting Errors with Ruff
-      run: ruff fix .
     - name: Security Check with Bandit
       run: bandit -r .
     - name: Commit & Push changes
