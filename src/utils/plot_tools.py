@@ -64,7 +64,10 @@ def autoPlot(
         colors = {i: colors[i] for i in range(max(y) + 1)}
         colors[-1] = "gray"
         colors[-2] = "red"
-        hashColor = lambda y: [colors[one] for one in y]
+
+        def hashColor(y):
+            return [colors[one] for one in y]
+
         noise_mask = y == -1
 
         if data.shape[1] == 2:
@@ -345,7 +348,7 @@ class PaperGraph:
         random.shuffle(color_add)
         color_list = color_list + color_add
 
-        fig = plt.figure(figsize=(4, 4))
+        plt.figure(figsize=(4, 4))
         for i in range(NC):
             points = X_extend[manifolds[i].pID, :-2]
             centers = np.mean(points, axis=0)

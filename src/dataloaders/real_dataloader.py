@@ -13,22 +13,23 @@ class Real_DataLoader:
     """
     A data loader class designed to load and preprocess datasets for machine learning models.
     It supports a variety of datasets, handling them based on their characteristics.
-    
+
     Attributes:
         name (str): The name of the dataset to be loaded.
         path (str): The path to the directory containing the datasets.
-    
+
     Methods:
         load(): Loads and preprocesses the specified dataset.
     """
+
     def __init__(self, name, path="../datasets/real_datasets/"):
         """
         Initializes the Real_DataLoader object with dataset name and path.
-        
+
         Parameters:
             name (str): The name of the dataset to load.
             path (str): The directory path where datasets are stored, defaulting to "../datasets/real_datasets/".
-            
+
         Raises:
             ValueError: If the provided dataset name is not recognized.
         """
@@ -40,16 +41,16 @@ class Real_DataLoader:
     def load(self):
         """
         Loads and preprocesses the dataset specified during the object initialization.
-        
+
         This method applies appropriate preprocessing for each dataset, such as dropping specific columns,
         handling missing values, and encoding the target variable. It adapts based on the dataset to load
         small-scale datasets from CSV files, fetch large-scale datasets like face, MNIST, and FashionMNIST,
         and specifically handle the "codon" dataset by dropping specified columns and label encoding the target.
-        
+
         Returns:
             X (np.ndarray): The features of the dataset in a NumPy array format.
             Y_true (np.ndarray): The labels of the dataset, processed as required (e.g., label encoded).
-            
+
         Raises:
             Exception: If there is an issue loading or processing the dataset.
         """
@@ -100,11 +101,19 @@ class Real_DataLoader:
                 # The rest of the columns (starting from index 1) are features
                 X = df.iloc[1:, 1:].values.astype(float)
             elif self.name == "codon":
-                    df = pd.read_csv(osp.join(self.path, self.name + ".csv"), header=0, low_memory=False)
-                    df.drop(['UUU', 'UUC', 'SpeciesName'], axis=1, inplace=True)  # Drop specified columns
-                    X = df.iloc[:, 1:].values.astype(float)  # Features, excluding the first column ('Kingdom')
-                    label_encoder = LabelEncoder()
-                    Y_true = label_encoder.fit_transform(df['Kingdom'].values)  # Label encode 'Kingdom'
+                df = pd.read_csv(
+                    osp.join(self.path, self.name + ".csv"), header=0, low_memory=False
+                )
+                df.drop(
+                    ["UUU", "UUC", "SpeciesName"], axis=1, inplace=True
+                )  # Drop specified columns
+                X = df.iloc[:, 1:].values.astype(
+                    float
+                )  # Features, excluding the first column ('Kingdom')
+                label_encoder = LabelEncoder()
+                Y_true = label_encoder.fit_transform(
+                    df["Kingdom"].values
+                )  # Label encode 'Kingdom'
             return X, Y_true
         except Exception as e:
-                raise Exception(f"An error occurred while loading the dataset: {e}")
+            raise Exception(f"An error occurred while loading the dataset: {e}")

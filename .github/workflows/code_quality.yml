@@ -1,0 +1,35 @@
+name: Code Quality Checks
+
+on:
+  push:
+    branches: 
+      - main 
+      - cicd-workflow
+  pull_request:
+    branches: 
+      - main 
+      - cicd-workflow
+
+jobs:
+  code-quality-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        persist-credentials: false  
+        fetch-depth: 0              
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+    - name: Install Python tools (Black with Jupyter, Ruff)
+      run: pip install "black[jupyter]" ruff
+    - name: Auto-fix Linting Errors with Ruff
+      run: ruff check --fix --ignore "E741,E402,E721,E712,F401,E702" --unsafe-fixes
+    - name: Auto-fix Formatting Issues with Black
+      run: black .
+    - name: Commit & Push changes
+      uses: actions-js/push@v1.4
+      with:
+        github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
