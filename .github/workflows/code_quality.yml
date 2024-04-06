@@ -2,11 +2,13 @@ name: Code Quality Checks
 
 on:
   push:
-    branches:
-      - main
+    branches: 
+      - main 
+      - cicd-workflow
   pull_request:
-    branches:
-      - main
+    branches: 
+      - main 
+      - cicd-workflow
 
 jobs:
   code-quality-check:
