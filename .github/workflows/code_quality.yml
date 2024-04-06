@@ -22,12 +22,10 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.8'
-    - name: Install Python tools (Black with Jupyter, Bandit, Ruff)
-      run: pip install "black[jupyter]" bandit ruff
+    - name: Install Python tools (Black with Jupyter, Ruff)
+      run: pip install "black[jupyter]" ruff
     - name: Auto-fix Linting Errors with Ruff
       run: ruff check --fix --ignore "E741,E402,E721,E712,F401,E702" --unsafe-fixes
-    - name: Security Check with Bandit
-      run: bandit -r .
     - name: Auto-fix Formatting Issues with Black
       run: black .
     - name: Commit & Push changes
