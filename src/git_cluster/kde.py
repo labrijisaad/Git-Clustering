@@ -1,6 +1,9 @@
 import numpy as np
 
-norm_minmax = lambda x: (x - np.min(x)) / (np.max(x) - np.min(x))
+
+def norm_minmax(x):
+    return (x - np.min(x)) / (np.max(x) - np.min(x))
+
 
 from sklearn.neighbors import NearestNeighbors
 
